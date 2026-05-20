@@ -21,7 +21,7 @@
             color: var(--text-dark);
         }
 
-        /* Header Navigation Styles */
+        /* Responsive Header Layout */
         header {
             background-color: #ffffff;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
@@ -67,7 +67,7 @@
             color: var(--primary-blue);
         }
 
-        /* Hero Landing Showcase Layout */
+        /* Hero Showcase Section */
         .hero-section {
             background-image: linear-gradient(rgba(15, 41, 77, 0.7), rgba(15, 41, 77, 0.45)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
@@ -96,7 +96,7 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
 
-        /* Nav Interface Selection Tabs */
+        /* Navigation Tabs Container */
         .tabs-container {
             width: 900px;
             max-width: 100%;
@@ -126,36 +126,20 @@
             color: var(--dark-navy);
         }
 
-        /* 💻 DESKTOP ENGINE FRAMING */
-        .desktop-widget-container {
-            display: block; /* Shown on computer screens */
+        /* SMART MOBILE SCALING WRAPPER FOR IFRAMES */
+        .widget-scaler-frame {
+            width: 900px;
+            height: 200px;
             background: #ffffff;
             border-bottom-left-radius: 12px;
             border-bottom-right-radius: 12px;
             border-top-right-radius: 12px;
             box-shadow: 0 12px 40px rgba(0,0,0,0.25);
-            width: 900px; 
-            height: 200px; 
             overflow: hidden;
             border: 4px solid #ffffff;
+            transform-origin: top center;
         }
 
-        /* 📱 MOBILE ENGINE FRAMING */
-        .mobile-widget-container {
-            display: none; /* Hidden on computer screens by default */
-            background: #ffffff;
-            border-bottom-left-radius: 12px;
-            border-bottom-right-radius: 12px;
-            border-top-right-radius: 12px;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
-            width: 100%;
-            max-width: 340px; /* Snug fit for the 320px wide widgets */
-            height: 340px; /* Snug fit for the 320px high widgets */
-            overflow: hidden;
-            border: 4px solid #ffffff;
-        }
-
-        /* General Switching Utilities */
         .widget-pane {
             display: none;
             width: 100%;
@@ -173,7 +157,7 @@
             display: block;
         }
 
-        /* Core Global Content Containers */
+        /* Content Sections Base Wrapper */
         .content-container {
             max-width: 1140px;
             margin: 60px auto;
@@ -187,7 +171,7 @@
             font-weight: 800;
         }
 
-        /* Core Marketing Features Row Block Layout */
+        /* Information Feature Row Grid styling */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -199,7 +183,7 @@
             background: #ffffff;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 15 rgba(0,0,0,0.02);
             text-align: center;
         }
 
@@ -216,7 +200,7 @@
             margin: 0;
         }
 
-        /* Trending Destinations Feature Grid Layout */
+        /* Destination Deals Grid */
         .deals-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -268,7 +252,7 @@
             font-size: 15px;
         }
 
-        /* Footer Element Box Framework */
+        /* Footer Element Box */
         footer {
             background-color: var(--dark-navy);
             color: #ffffff;
@@ -359,7 +343,7 @@
             padding-top: 20px;
         }
 
-        /* 📱 RESPONSIVE MEDIA QUERIES (HANDLES SCREEN SWAPPING) */
+        /* 📱 RESPONSIVE MEDIA QUERIES FOR SMARTPHONES */
         @media (max-width: 940px) {
             header {
                 padding: 0 20px;
@@ -372,22 +356,12 @@
             }
             .tabs-container {
                 width: 100%;
-                max-width: 340px; /* Align control tabs perfectly over mobile widget width */
             }
             .tab-btn {
                 flex: 1;
                 padding: 12px 10px;
                 font-size: 14px;
             }
-            
-            /* SWAP BLOCKS ENGINE ACTIVE STATE */
-            .desktop-widget-container {
-                display: none !important; /* Hide wide display engine on phone screens */
-            }
-            .mobile-widget-container {
-                display: block !important; /* Show square mobile system on phone screens */
-            }
-
             .features-grid, .deals-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -401,7 +375,7 @@
 </head>
 <body>
 
-    <!-- Main Global Navbar Header -->
+    <!-- Main Global Navbar -->
     <header>
         <a href="#" class="logo-container">
             <span class="logo-maple">🍁</span>
@@ -413,53 +387,47 @@
         </nav>
     </header>
 
-    <!-- Interactive Hero Interface Panel Area -->
+    <!-- Interactive Hero Interface Panel -->
     <section class="hero-section">
         <h1>Where to next?</h1>
         <p>Proudly serving Canadian travelers with real-time global booking deals.</p>
         
-        <!-- Shared Selection Bar -->
+        <!-- Tab Swapping Row selectors -->
         <div class="tabs-container">
             <button id="btn-flights" class="tab-btn active" onclick="switchTab('flights')">✈️ Flights</button>
             <button id="btn-hotels" class="tab-btn" onclick="switchTab('hotels')">🏨 Hotels</button>
         </div>
 
-        <!-- 💻 LAYOUT TRACK A: DESKTOP SEARCH CONTROLS -->
-        <div class="desktop-widget-container">
+        <!-- The responsive scaling wrapper housing the search system -->
+        <div id="scaler-frame" class="widget-scaler-frame">
             
-            <!-- Desktop Flights Frame -->
-            <div id="dt-pane-flights" class="widget-pane active">
-                <iframe src="https://www.trip.com/partners/ad/S17200178?Allianceid=7851628&SID=295367402&trip_sub1="></iframe>
+            <!-- ✈️ TAB 1: FLIGHT SEARCH INTERFACE BOX -->
+            <div id="pane-flights" class="widget-pane active">
+                <iframe 
+                    src="https://www.trip.com/partners/ad/S17200178?Allianceid=7851628&SID=295367402&trip_sub1=" 
+                    frameborder="0" 
+                    scrolling="no" 
+                    id="S17200178">
+                </iframe>
             </div>
 
-            <!-- Desktop Hotels Frame -->
-            <div id="dt-pane-hotels" class="widget-pane">
-                <iframe src="https://www.trip.com/partners/ad/S17199926?Allianceid=7851628&SID=295367402&trip_sub1="></iframe>
+            <!-- 🏨 TAB 2: HOTEL SEARCH INTERFACE BOX -->
+            <div id="pane-hotels" class="widget-pane">
+                <iframe 
+                    src="https://www.trip.com/partners/ad/S17199926?Allianceid=7851628&SID=295367402&trip_sub1=" 
+                    frameborder="0" 
+                    scrolling="no" 
+                    id="S17199926">
+                </iframe>
             </div>
 
         </div>
-
-        <!-- 📱 LAYOUT TRACK B: SMARTPHONE MOBILE SEARCH CONTROLS -->
-        <div class="mobile-widget-container">
-            
-            <!-- Mobile Flights Frame (YOUR CODE EMBEDDED!) -->
-            <div id="mb-pane-flights" class="widget-pane active">
-                <iframe src="https://www.trip.com/partners/ad/S17201725?Allianceid=7851628&SID=295367402&trip_sub1=Mobile"></iframe>
-            </div>
-
-            <!-- Mobile Hotels Frame (YOUR CODE EMBEDDED!) -->
-            <div id="mb-pane-hotels" class="widget-pane">
-                <iframe src="https://www.trip.com/partners/ad/S17201697?Allianceid=7851628&SID=295367402&trip_sub1=Mobile"></iframe>
-            </div>
-
-        </div>
-
     </section>
 
-    <!-- Main Content Core Section Elements Wrapper -->
+    <!-- Main Core Platform Layout Elements -->
     <main class="content-container">
         
-        <!-- Platform Competitive Advantage Value Columns Grid -->
+        <!-- Value-Focused Advantage Grid -->
         <div class="features-grid">
             <div class="card">
                 <h3>🔒 Secure Verification</h3>
@@ -475,179 +443,49 @@
             </div>
         </div>
 
-        <!-- Dynamic Trending Flight Deals Component -->
-        <h2 class="section-title" style="margin-bottom: 10px;">🔥 Trending Flight Deals for Canadians</h2>
-        
-        <!-- Departure City Dropdown Select -->
-        <div style="text-align: center; margin-bottom: 30px;">
-            <label for="city-select" style="font-size: 16px; font-weight: bold; margin-right: 10px; color: #333;">Select Your Departure City:</label>
-            <select id="city-select" onchange="updateFlightDeals(this.value)" style="padding: 8px 16px; font-size: 15px; border-radius: 6px; border: 2px solid #ff4d4d; outline: none; cursor: pointer; font-weight: 600; background-color: #fff;">
-                <option value="toronto">Toronto (YYZ)</option>
-                <option value="vancouver">Vancouver (YVR)</option>
-                <option value="montreal">Montreal (YUL)</option>
-                <option value="calgary">Calgary (YYC)</option>
-            </select>
+        <!-- Top Trending Deals Grid Section -->
+        <h2 class="section-title">🔥 Trending Destinations for Canadians</h2>
+        <div class="deals-grid">
+            
+            <!-- Cancun Deal Card -->
+            <a href="#" class="deal-card" onclick="switchTab('flights')">
+                <div class="deal-img-wrapper" style="background-image: url('https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRsd2XBbmjDsrtzReMBT399SxUMNCEg4s2YfchxiNySC9kROhWcIabnyBaW0nms-Jtt1lJmQ_OLP0uu7ZA');"></div>
+                <div class="deal-info">
+                    <h4>Cancun, Mexico</h4>
+                    <p>Escape to all-inclusive tropical resorts and blue waters.</p>
+                    <span class="deal-price">Search Lowest Fares &rarr;</span>
+                </div>
+            </a>
+
+            <!-- London Deal Card -->
+            <a href="#" class="deal-card" onclick="switchTab('flights')">
+                <div class="deal-img-wrapper" style="background-image: url('https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcT1o4qQfsfeqoPZfXwux3mHeidEGEQ6ELVi4np7OlxhCtCyhRwH6FdBoOWgiJs5hIYUkDNjbSFouCxSO2A');"></div>
+                <div class="deal-info">
+                    <h4>London, United Kingdom</h4>
+                    <p>Explore historic architecture, theaters, and landmarks.</p>
+                    <span class="deal-price">Search Lowest Fares &rarr;</span>
+                </div>
+            </a>
+
+            <!-- Las Vegas Deal Card -->
+            <a href="#" class="deal-card" onclick="switchTab('flights')">
+                <div class="deal-img-wrapper" style="background-image: url('https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcSoMTczBrnPRwBVwL11UF14krnk7Rp8QxbfVnr6sgB2R0m_DC20PcH1ZTGvHhX3_BB232Gr0piaNeNgVaQ');"></div>
+                <div class="deal-info">
+                    <h4>Las Vegas, USA</h4>
+                    <p>The perfect quick getaway for legendary world-class dining and shows.</p>
+                    <span class="deal-price">Search Lowest Fares &rarr;</span>
+                </div>
+            </a>
+
         </div>
 
-        <!-- The 3 Dynamic Flight Cards Grid -->
-        <div class="deals-grid" id="dynamic-deals-grid">
-            <!-- Box 1 -->
-            <a href="#" class="deal-card" onclick="switchTab('flights')">
-                <div class="deal-img-wrapper" id="img-box-1" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80');"></div>
-                <div class="deal-info">
-                    <h4 id="title-box-1">Toronto (YYZ) to Cancun (CUN)</h4>
-                    <p id="desc-box-1">Non-stop warm weather escape. Perfect for an all-inclusive beach resort getaway.</p>
-                    <span class="deal-price" id="price-box-1">From $333 CAD &rarr;</span>
-                </div>
-            </a>
-
-            <!-- Box 2 -->
-            <a href="#" class="deal-card" onclick="switchTab('flights')">
-                <div class="deal-img-wrapper" id="img-box-2" style="background-image: url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=400&q=80');"></div>
-                <div class="deal-info">
-                    <h4 id="title-box-2">Toronto (YYZ) to London (LHR)</h4>
-                    <p id="desc-box-2">Direct transatlantic routes. Explore historic sights, West End theatre, and culture.</p>
-                    <span class="deal-price" id="price-box-2">From $675 CAD &rarr;</span>
-                </div>
-            </a>
-
-            <!-- Box 3 -->
-            <a href="#" class="deal-card" onclick="switchTab('flights')">
-                <div class="deal-img-wrapper" id="img-box-3" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=400&q=80');"></div>
-                <div class="deal-info">
-                    <h4 id="title-box-3">Toronto (YYZ) to Paris (CDG)</h4>
-                    <p id="desc-box-3">Budget flight drops detected. Ideal time to book a romantic European holiday.</p>
-                    <span class="deal-price" id="price-box-3">From $710 CAD &rarr;</span>
-                </div>
-            </a>
-        </div>
-
-      <!-- JavaScript Engine to Update Destinations Dynamically -->
-<script>
-const flightData = {
-    toronto: [
-        {
-            title: "Toronto (YYZ) to Cancun (CUN)",
-            desc: "Non-stop warm weather escape. Perfect for an all-inclusive beach resort getaway.",
-            img: "https://pixabay.com/get/g641571bc88523bd1437cc44fa124ba18042457c0db7ca5ec9d99723cf305fbc08ccb40bcfbe3b435ffbd25ef3550e500_640.jpg",
-            price: "From $333 CAD &rarr;",
-            url: "https://www.trip.com/flights/Toronto-to-Cancun/tickets-YTO-CUN?flighttype=S&dcity=YTO&acity=CUN&Allianceid=7851628&SID=295367402&trip_sub1=&trip_sub3=D17202544"
-        },
-        {
-            title: "Toronto (YYZ) to London (LHR)",
-            desc: "Direct transatlantic routes. Explore historic sights, West End theatre, and culture.",
-            img: "https://pixabay.com/get/g4da605f6d895f3b79daae4525eb0f592a392fc64fa6dfbb5a363d6b05ca08779b63486df8118080f55cf94d930fe357e_640.jpg",
-            price: "From $675 CAD &rarr;",
-            url: "https://www.trip.com/flights/Toronto-to-London/tickets-YTO-LON?flighttype=S&dcity=YTO&acity=LON&Allianceid=7851628&SID=295367402&trip_sub1=&trip_sub3=D17202544"
-        },
-        {
-            title: "Toronto (YYZ) to Paris (CDG)",
-            desc: "Budget flight drops detected. Ideal time to book a romantic European holiday.",
-            img: "https://pixabay.com/get/g0fa668858e6530a5c4dbda30f7be6aeef48cf94f50f453cb1c9b3602fc5f03f39a77042a98402ee384a92c3a502ef401_640.jpg",
-            price: "From $710 CAD &rarr;",
-            url: "https://www.trip.com/flights/Toronto-to-Paris/tickets-YTO-PAR?flighttype=S&dcity=YTO&acity=PAR&Allianceid=7851628&SID=295367402&trip_sub1=&trip_sub3=D17202544"
-        }
-    ],
-    vancouver: [
-        {
-            title: "Vancouver (YVR) to Tokyo (NRT)",
-            desc: "Popular transpacific route. Experience culinary wonders and neon streets in Japan.",
-            img: "https://pixabay.com/get/g5517173b22e70e93b48227bdafbcfb6c5108d8132cb0a5cb904ef2b77548a30cf7f651664fbbf4fbebc86d4e116e7616_640.jpg",
-            price: "From $890 CAD &rarr;",
-            url: "#"
-        },
-        {
-            title: "Vancouver (YVR) to Los Angeles (LAX)",
-            desc: "Short non-stop hop to sunny California. Great for theme parks and coastal drives.",
-            img: "https://pixabay.com/get/gd1efce09ce797f1fbcdae0789fe6bf739f4e24efbf8d132cb63dfdf04a1b02353f86e3f0190bd055fa04dc908cb28ebf_640.jpg",
-            price: "From $295 CAD &rarr;",
-            url: "#"
-        },
-        {
-            title: "Vancouver (YVR) to Honolulu (HNL)",
-            desc: "Direct flights to the Hawaiian tropics. Enjoy surfing, hiking, and island relaxation.",
-            img: "https://pixabay.com/get/gffbf42fb4490f058cf3e2b26002f6fa733d02675973ef890a56fe73e35ef0003023e9808ea1ba42c1303cc54fe8e0e71_640.jpg",
-            price: "From $420 CAD &rarr;",
-            url: "#"
-        }
-    ],
-    montreal: [
-        {
-            title: "Montreal (YUL) to Paris (CDG)",
-            desc: "Highly requested direct French connection. Explore top museums and fine dining.",
-            img: "https://pixabay.com/get/g0fa668858e6530a5c4dbda30f7be6aeef48cf94f50f453cb1c9b3602fc5f03f39a77042a98402ee384a92c3a502ef401_640.jpg",
-            price: "From $640 CAD &rarr;",
-            url: "#"
-        },
-        {
-            title: "Montreal (YUL) to Lyon (LYS)",
-            desc: "Massive price drop trends noticed! Discover France's legendary gastronomy capital.",
-            img: "https://pixabay.com/get/gfca2e737fe3fcb0bcf423c8e47dbbca77cb36ecf2dd47c1ba21735a29790eb9db00fc48981b1c6760fa596041ec60252_640.jpg",
-            price: "From $580 CAD &rarr;",
-            url: "#"
-        },
-        {
-            title: "Montreal (YUL) to Miami (MIA)",
-            desc: "Fly south for the winter breeze. Perfect weekend getaway for nightlife and beaches.",
-            img: "https://pixabay.com/get/g72a0889ecae693fa2cc96001099b24479901ee19dbe7ef2c422bf6b9b3e1bbcd8b939e6a0d4cfdfb974a961dbaf59ec3_640.jpg",
-            price: "From $310 CAD &rarr;",
-            url: "#"
-        }
-    ],
-    calgary: [
-        {
-            title: "Calgary (YYC) to London (LGW)",
-            desc: "Direct paths straight to the UK. Convenient flights avoiding eastern layovers.",
-            img: "https://pixabay.com/get/g4da605f6d895f3b79daae4525eb0f592a392fc64fa6dfbb5a363d6b05ca08779b63486df8118080f55cf94d930fe357e_640.jpg",
-            price: "From $740 CAD &rarr;",
-            url: "#"
-        },
-        {
-            title: "Calgary (YYC) to Puerto Vallarta (PVR)",
-            desc: "Western Canada's favourite winter sun spot. Golden sands and oceanside resorts.",
-            img: "https://pixabay.com/get/gbe1dcc4fcc4ec436a567634f3199859f5b2fa8162238ccfb85f7ea07a7df49e0c18d348006b5fbc40061fa08be65cb07_640.jpg",
-            price: "From $395 CAD &rarr;",
-            url: "#"
-        },
-        {
-            title: "Calgary (YYC) to Las Vegas (LAS)",
-            desc: "Quick non-stop escape to the desert strip for entertainment, shows, and dining.",
-            img: "https://pixabay.com/get/g859dfa3754e0bcfba6bf0f0fcf600f7389ea1496a798993240ea85e5898d9c578059082a52dfdb0b4dcb8114f85e498d_640.jpg",
-            price: "From $240 CAD &rarr;",
-            url: "#"
-        }
-    ]
-};
-
-function updateFlightDeals(selectedCity) {
-    if (!flightData[selectedCity]) return;
-    
-    const deals = flightData[selectedCity];
-    
-    // Loop through each of the 3 boxes to replace content AND destination links
-    for (let i = 0; i < 3; i++) {
-        const boxIndex = i + 1;
-        
-        // Update texts and backgrounds
-        document.getElementById(`title-box-${boxIndex}`).innerText = deals[i].title;
-        document.getElementById(`desc-box-${boxIndex}`).innerText = deals[i].desc;
-        document.getElementById(`img-box-${boxIndex}`).style.backgroundImage = `url('${deals[i].img}')`;
-        document.getElementById(`price-box-${boxIndex}`).innerHTML = deals[i].price;
-        
-        // FIX: Find the anchor link container wrapping this box or the button, and update its href!
-        const linkElement = document.getElementById(`link-box-${boxIndex}`);
-        if (linkElement) {
-            linkElement.href = deals[i].url;
-        }
-    }
-}
-</script>
     </main>
 
-    <!-- Global Corporate Compliance Footer Row -->
+    <!-- Global Corporate Footer Block Frame -->
     <footer>
         <div class="footer-content">
             
+            <!-- Quick Destination Links for SEO -->
             <div class="footer-seo-row">
                 <h4>🍁 Popular Canadian Departures</h4>
                 <div class="seo-links-container">
@@ -658,6 +496,7 @@ function updateFlightDeals(selectedCity) {
                 </div>
             </div>
 
+            <!-- Legal Disclosures & Navigation Links -->
             <div class="footer-legal-row">
                 <div class="legal-text-box">
                     <strong>FareFinder.ca</strong>
@@ -672,35 +511,54 @@ function updateFlightDeals(selectedCity) {
                 </div>
             </div>
 
+            <!-- Copyright Block -->
             <div class="copyright-box">
                 &copy; 2026 FareFinder.ca. All rights reserved. Prices displayed are subject to inventory availability.
             </div>
         </div>
     </footer>
 
-    <!-- Dual-Track JavaScript Sync Engine Controller -->
+    <!-- JavaScript Navigation and Responsive Scaling Engine -->
     <script>
         function switchTab(type) {
-            // Remove active toggles simultaneously from every structural pane element
             document.getElementById('btn-flights').classList.remove('active');
             document.getElementById('btn-hotels').classList.remove('active');
-            
-            document.getElementById('dt-pane-flights').classList.remove('active');
-            document.getElementById('dt-pane-hotels').classList.remove('active');
-            document.getElementById('mb-pane-flights').classList.remove('active');
-            document.getElementById('mb-pane-hotels').classList.remove('active');
+            document.getElementById('pane-flights').classList.remove('active');
+            document.getElementById('pane-hotels').classList.remove('active');
 
-            // Intelligently route active states depending on menu toggle selection
             if(type === 'flights') {
                 document.getElementById('btn-flights').classList.add('active');
-                document.getElementById('dt-pane-flights').classList.add('active'); // Activates Desktop Flight
-                document.getElementById('mb-pane-flights').classList.add('active'); // Activates Mobile Flight simultaneously
+                document.getElementById('pane-flights').classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } else if(type === 'hotels') {
                 document.getElementById('btn-hotels').classList.add('active');
-                document.getElementById('dt-pane-hotels').classList.add('active'); // Activates Desktop Hotel
-                document.getElementById('mb-pane-hotels').classList.add('active'); // Activates Mobile Hotel simultaneously
+                document.getElementById('pane-hotels').classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
+
+        // Live calculation engine to dynamically shrink/scale the fixed-width Trip.com iframe
+        function handleMobileScaling() {
+            const frame = document.getElementById('scaler-frame');
+            const containerWidth = frame.parentElement.clientWidth;
+            const targetWidth = 900; // Original desktop layout target layout width
+
+            if (containerWidth < targetWidth) {
+                const scaleFactor = containerWidth / targetWidth;
+                frame.style.transform = `scale(${scaleFactor})`;
+                // Calculate and enforce a matching height offset to prevent whitespace clipping
+                frame.parentElement.style.height = `${200 * scaleFactor}px`;
+                frame.style.marginBottom = `-${200 * (1 - scaleFactor)}px`;
+            } else {
+                frame.style.transform = 'none';
+                frame.parentElement.style.height = 'auto';
+                frame.style.marginBottom = '0';
+            }
+        }
+
+        // Bind layout math calculations directly to load and display resize execution tracks
+        window.addEventListener('resize', handleMobileScaling);
+        window.addEventListener('DOMContentLoaded', handleMobileScaling);
     </script>
 
 </body>
