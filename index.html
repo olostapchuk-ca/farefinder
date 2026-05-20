@@ -477,36 +477,153 @@
                 <p>Get up-to-the-minute fare tracking, direct scheduling updates, and hidden deals pulled from real-time global inventory.</p>
             </div>
         </div>
-        <!-- Trending Destinations Feature Grid Layout Component -->
-        <h2 class="section-title">🔥 Trending Destinations for Canadians</h2>
-        <div class="deals-grid">
+        <!-- Dynamic Trending Flight Deals Component -->
+        <h2 class="section-title" style="margin-bottom: 10px;">🔥 Trending Flight Deals for Canadians</h2>
+        
+        <!-- Departure City Dropdown Select -->
+        <div style="text-align: center; margin-bottom: 30px;">
+            <label for="city-select" style="font-size: 16px; font-weight: bold; margin-right: 10px; color: #333;">Select Your Departure City:</label>
+            <select id="city-select" onchange="updateFlightDeals(this.value)" style="padding: 8px 16px; font-size: 15px; border-radius: 6px; border: 2px solid #ff4d4d; outline: none; cursor: pointer; font-weight: 600; background-color: #fff;">
+                <option value="toronto">Toronto (YYZ)</option>
+                <option value="vancouver">Vancouver (YVR)</option>
+                <option value="montreal">Montreal (YUL)</option>
+                <option value="calgary">Calgary (YYC)</option>
+            </select>
+        </div>
+
+        <!-- The 3 Dynamic Flight Cards Grid -->
+        <div class="deals-grid" id="dynamic-deals-grid">
+            <!-- Box 1 -->
+            <a href="#" class="deal-card" onclick="switchTab('flights')">
+                <div class="deal-img-wrapper" id="img-box-1" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80');"></div>
+                <div class="deal-info">
+                    <h4 id="title-box-1">Toronto (YYZ) to Cancun (CUN)</h4>
+                    <p id="desc-box-1">Non-stop warm weather escape. Perfect for an all-inclusive beach resort getaway.</p>
+                    <span class="deal-price" id="price-box-1">From $333 CAD &rarr;</span>
+                </div>
+            </a>
+
+            <!-- Box 2 -->
+            <a href="#" class="deal-card" onclick="switchTab('flights')">
+                <div class="deal-img-wrapper" id="img-box-2" style="background-image: url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=400&q=80');"></div>
+                <div class="deal-info">
+                    <h4 id="title-box-2">Toronto (YYZ) to London (LHR)</h4>
+                    <p id="desc-box-2">Direct transatlantic routes. Explore historic sights, West End theatre, and culture.</p>
+                    <span class="deal-price" id="price-box-2">From $675 CAD &rarr;</span>
+                </div>
+            </a>
+
+            <!-- Box 3 -->
+            <a href="#" class="deal-card" onclick="switchTab('flights')">
+                <div class="deal-img-wrapper" id="img-box-3" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=400&q=80');"></div>
+                <div class="deal-info">
+                    <h4 id="title-box-3">Toronto (YYZ) to Paris (CDG)</h4>
+                    <p id="desc-box-3">Budget flight drops detected. Ideal time to book a romantic European holiday.</p>
+                    <span class="deal-price" id="price-box-3">From $710 CAD &rarr;</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- JavaScript Engine to Update Destinations Dynamically -->
+        <script>
+        const flightData = {
+            toronto: [
+                {
+                    title: "Toronto (YYZ) to Cancun (CUN)",
+                    desc: "Non-stop warm weather escape. Perfect for an all-inclusive beach resort getaway.",
+                    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80",
+                    price: "From $333 CAD &rarr;"
+                },
+                {
+                    title: "Toronto (YYZ) to London (LHR)",
+                    desc: "Direct transatlantic routes. Explore historic sights, West End theatre, and culture.",
+                    img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=400&q=80",
+                    price: "From $675 CAD &rarr;"
+                },
+                {
+                    title: "Toronto (YYZ) to Paris (CDG)",
+                    desc: "Budget flight drops detected. Ideal time to book a romantic European holiday.",
+                    img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=400&q=80",
+                    price: "From $710 CAD &rarr;"
+                }
+            ],
+            vancouver: [
+                {
+                    title: "Vancouver (YVR) to Tokyo (NRT)",
+                    desc: "Popular transpacific route. Experience culinary wonders and neon streets in Japan.",
+                    img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=400&q=80",
+                    price: "From $890 CAD &rarr;"
+                },
+                {
+                    title: "Vancouver (YVR) to Los Angeles (LAX)",
+                    desc: "Short non-stop hop to sunny California. Great for theme parks and coastal drives.",
+                    img: "https://images.unsplash.com/photo-1534430480872-3498386e7a69?auto=format&fit=crop&w=400&q=80",
+                    price: "From $295 CAD &rarr;"
+                },
+                {
+                    title: "Vancouver (YVR) to Honolulu (HNL)",
+                    desc: "Direct flights to the Hawaiian tropics. Enjoy surfing, hiking, and island relaxation.",
+                    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80",
+                    price: "From $420 CAD &rarr;"
+                }
+            ],
+            montreal: [
+                {
+                    title: "Montreal (YUL) to Paris (CDG)",
+                    desc: "Highly requested direct French connection. Explore top museums and fine dining.",
+                    img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=400&q=80",
+                    price: "From $640 CAD &rarr;"
+                },
+                {
+                    title: "Montreal (YUL) to Lyon (LYS)",
+                    desc: "Massive price drop trends noticed! Discover France's legendary gastronomy capital.",
+                    img: "https://images.unsplash.com/photo-1528642474498-1af0c17fd8c3?auto=format&fit=crop&w=400&q=80",
+                    price: "From $580 CAD &rarr;"
+                },
+                {
+                    title: "Montreal (YUL) to Miami (MIA)",
+                    desc: "Fly south for the winter breeze. Perfect weekend getaway for nightlife and beaches.",
+                    img: "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=400&q=80",
+                    price: "From $310 CAD &rarr;"
+                }
+            ],
+            calgary: [
+                {
+                    title: "Calgary (YYC) to London (LGW)",
+                    desc: "Direct paths straight to the UK. Convenient flights avoiding eastern layovers.",
+                    img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=400&q=80",
+                    price: "From $740 CAD &rarr;"
+                },
+                {
+                    title: "Calgary (YYC) to Puerto Vallarta (PVR)",
+                    desc: "Western Canada's favourite winter sun spot. Golden sands and oceanside resorts.",
+                    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80",
+                    price: "From $395 CAD &rarr;"
+                },
+                {
+                    title: "Calgary (YYC) to Las Vegas (LAS)",
+                    desc: "Quick non-stop escape to the desert strip for entertainment, shows, and dining.",
+                    img: "https://images.unsplash.com/photo-1522083165195-3427ec02927a?auto=format&fit=crop&w=400&q=80",
+                    price: "From $240 CAD &rarr;"
+                }
+            ]
+        };
+
+        function updateFlightDeals(selectedCity) {
+            if (!flightData[selectedCity]) return;
             
-            <a href="#" class="deal-card" onclick="switchTab('flights')">
-                <div class="deal-img-wrapper" style="background-image: url('https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRsd2XBbmjDsrtzReMBT399SxUMNCEg4s2YfchxiNySC9kROhWcIabnyBaW0nms-Jtt1lJmQ_OLP0uu7ZA');"></div>
-                <div class="deal-info">
-                    <h4>Cancun, Mexico</h4>
-                    <p>Escape to all-inclusive tropical resorts and blue waters.</p>
-                    <span class="deal-price">Search Lowest Fares &rarr;</span>
-                </div>
-            </a>
-
-            <a href="#" class="deal-card" onclick="switchTab('flights')">
-                <div class="deal-img-wrapper" style="background-image: url('https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcT1o4qQfsfeqoPZfXwux3mHeidEGEQ6ELVi4np7OlxhCtCyhRwH6FdBoOWgiJs5hIYUkDNjbSFouCxSO2A');"></div>
-                <div class="deal-info">
-                    <h4>London, United Kingdom</h4>
-                    <p>Explore historic architecture, theaters, and landmarks.</p>
-                    <span class="deal-price">Search Lowest Fares &rarr;</span>
-                </div>
-            </a>
-
-            <a href="#" class="deal-card" onclick="switchTab('flights')">
-                <div class="deal-img-wrapper" style="background-image: url('https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcSoMTczBrnPRwBVwL11UF14krnk7Rp8QxbfVnr6sgB2R0m_DC20PcH1ZTGvHhX3_BB232Gr0piaNeNgVaQ');"></div>
-                <div class="deal-info">
-                    <h4>Las Vegas, USA</h4>
-                    <p>The perfect quick getaway for legendary world-class dining and shows.</p>
-                    <span class="deal-price">Search Lowest Fares &rarr;</span>
-                </div>
-            </a>
+            const deals = flightData[selectedCity];
+            
+            // Loop through each of the 3 boxes to replace destination titles, summaries, images, and pricing tags
+            for (let i = 0; i < 3; i++) {
+                const boxIndex = i + 1;
+                document.getElementById(`title-box-${boxIndex}`).innerText = deals[i].title;
+                document.getElementById(`desc-box-${boxIndex}`).innerText = deals[i].desc;
+                document.getElementById(`img-box-${boxIndex}`).style.backgroundImage = `url('${deals[i].img}')`;
+                document.getElementById(`price-box-${boxIndex}`).innerHTML = deals[i].price;
+            }
+        }
+        </script>
 
         </div>
 
