@@ -21,7 +21,7 @@
             color: var(--text-dark);
         }
 
-        /* Responsive Header Layout */
+        /* Header Navigation Styles */
         header {
             background-color: #ffffff;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
@@ -67,7 +67,7 @@
             color: var(--primary-blue);
         }
 
-        /* Hero Showcase Section */
+        /* Hero Landing Showcase Layout */
         .hero-section {
             background-image: linear-gradient(rgba(15, 41, 77, 0.7), rgba(15, 41, 77, 0.45)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
@@ -96,7 +96,7 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
 
-        /* Navigation Tabs Container */
+        /* Nav Interface Selection Tabs */
         .tabs-container {
             width: 900px;
             max-width: 100%;
@@ -126,20 +126,36 @@
             color: var(--dark-navy);
         }
 
-        /* SMART MOBILE SCALING WRAPPER FOR IFRAMES */
-        .widget-scaler-frame {
-            width: 900px;
-            height: 200px;
+        /* 💻 DESKTOP ENGINE FRAMING */
+        .desktop-widget-container {
+            display: block; /* Shown on computer screens */
             background: #ffffff;
             border-bottom-left-radius: 12px;
             border-bottom-right-radius: 12px;
             border-top-right-radius: 12px;
             box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+            width: 900px; 
+            height: 200px; 
             overflow: hidden;
             border: 4px solid #ffffff;
-            transform-origin: top center;
         }
 
+        /* 📱 MOBILE ENGINE FRAMING */
+        .mobile-widget-container {
+            display: none; /* Hidden on computer screens by default */
+            background: #ffffff;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            border-top-right-radius: 12px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+            width: 100%;
+            max-width: 340px; /* Snug fit for the 320px wide widgets */
+            height: 340px; /* Snug fit for the 320px high widgets */
+            overflow: hidden;
+            border: 4px solid #ffffff;
+        }
+
+        /* General Switching Utilities */
         .widget-pane {
             display: none;
             width: 100%;
@@ -157,7 +173,7 @@
             display: block;
         }
 
-        /* Content Sections Base Wrapper */
+        /* Core Global Content Containers */
         .content-container {
             max-width: 1140px;
             margin: 60px auto;
@@ -171,7 +187,7 @@
             font-weight: 800;
         }
 
-        /* Information Feature Row Grid styling */
+        /* Core Marketing Features Row Block Layout */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -183,7 +199,7 @@
             background: #ffffff;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 15 rgba(0,0,0,0.02);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
             text-align: center;
         }
 
@@ -200,7 +216,7 @@
             margin: 0;
         }
 
-        /* Destination Deals Grid */
+        /* Trending Destinations Feature Grid Layout */
         .deals-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -252,7 +268,7 @@
             font-size: 15px;
         }
 
-        /* Footer Element Box */
+        /* Footer Element Box Framework */
         footer {
             background-color: var(--dark-navy);
             color: #ffffff;
@@ -343,7 +359,7 @@
             padding-top: 20px;
         }
 
-        /* 📱 RESPONSIVE MEDIA QUERIES FOR SMARTPHONES */
+        /* 📱 RESPONSIVE MEDIA QUERIES (HANDLES SCREEN SWAPPING) */
         @media (max-width: 940px) {
             header {
                 padding: 0 20px;
@@ -356,12 +372,22 @@
             }
             .tabs-container {
                 width: 100%;
+                max-width: 340px; /* Align control tabs perfectly over mobile widget width */
             }
             .tab-btn {
                 flex: 1;
                 padding: 12px 10px;
                 font-size: 14px;
             }
+            
+            /* SWAP BLOCKS ENGINE ACTIVE STATE */
+            .desktop-widget-container {
+                display: none !important; /* Hide wide display engine on phone screens */
+            }
+            .mobile-widget-container {
+                display: block !important; /* Show square mobile system on phone screens */
+            }
+
             .features-grid, .deals-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -375,7 +401,7 @@
 </head>
 <body>
 
-    <!-- Main Global Navbar -->
+    <!-- Main Global Navbar Header -->
     <header>
         <a href="#" class="logo-container">
             <span class="logo-maple">🍁</span>
@@ -387,47 +413,53 @@
         </nav>
     </header>
 
-    <!-- Interactive Hero Interface Panel -->
+    <!-- Interactive Hero Interface Panel Area -->
     <section class="hero-section">
         <h1>Where to next?</h1>
         <p>Proudly serving Canadian travelers with real-time global booking deals.</p>
         
-        <!-- Tab Swapping Row selectors -->
+        <!-- Shared Selection Bar -->
         <div class="tabs-container">
             <button id="btn-flights" class="tab-btn active" onclick="switchTab('flights')">✈️ Flights</button>
             <button id="btn-hotels" class="tab-btn" onclick="switchTab('hotels')">🏨 Hotels</button>
         </div>
 
-        <!-- The responsive scaling wrapper housing the search system -->
-        <div id="scaler-frame" class="widget-scaler-frame">
+        <!-- 💻 LAYOUT TRACK A: DESKTOP SEARCH CONTROLS -->
+        <div class="desktop-widget-container">
             
-            <!-- ✈️ TAB 1: FLIGHT SEARCH INTERFACE BOX -->
-            <div id="pane-flights" class="widget-pane active">
-                <iframe 
-                    src="https://www.trip.com/partners/ad/S17200178?Allianceid=7851628&SID=295367402&trip_sub1=" 
-                    frameborder="0" 
-                    scrolling="no" 
-                    id="S17200178">
-                </iframe>
+            <!-- Desktop Flights Frame -->
+            <div id="dt-pane-flights" class="widget-pane active">
+                <iframe src="https://www.trip.com/partners/ad/S17200178?Allianceid=7851628&SID=295367402&trip_sub1="></iframe>
             </div>
 
-            <!-- 🏨 TAB 2: HOTEL SEARCH INTERFACE BOX -->
-            <div id="pane-hotels" class="widget-pane">
-                <iframe 
-                    src="https://www.trip.com/partners/ad/S17199926?Allianceid=7851628&SID=295367402&trip_sub1=" 
-                    frameborder="0" 
-                    scrolling="no" 
-                    id="S17199926">
-                </iframe>
+            <!-- Desktop Hotels Frame -->
+            <div id="dt-pane-hotels" class="widget-pane">
+                <iframe src="https://www.trip.com/partners/ad/S17199926?Allianceid=7851628&SID=295367402&trip_sub1="></iframe>
             </div>
 
         </div>
+
+        <!-- 📱 LAYOUT TRACK B: SMARTPHONE MOBILE SEARCH CONTROLS -->
+        <div class="mobile-widget-container">
+            
+            <!-- Mobile Flights Frame (YOUR CODE EMBEDDED!) -->
+            <div id="mb-pane-flights" class="widget-pane active">
+                <iframe src="https://www.trip.com/partners/ad/S17201725?Allianceid=7851628&SID=295367402&trip_sub1=Mobile"></iframe>
+            </div>
+
+            <!-- Mobile Hotels Frame (YOUR CODE EMBEDDED!) -->
+            <div id="mb-pane-hotels" class="widget-pane">
+                <iframe src="https://www.trip.com/partners/ad/S17201697?Allianceid=7851628&SID=295367402&trip_sub1=Mobile"></iframe>
+            </div>
+
+        </div>
+
     </section>
 
-    <!-- Main Core Platform Layout Elements -->
+    <!-- Main Content Core Section Elements Wrapper -->
     <main class="content-container">
         
-        <!-- Value-Focused Advantage Grid -->
+        <!-- Platform Competitive Advantage Value Columns Grid -->
         <div class="features-grid">
             <div class="card">
                 <h3>🔒 Secure Verification</h3>
@@ -443,11 +475,10 @@
             </div>
         </div>
 
-        <!-- Top Trending Deals Grid Section -->
+        <!-- Trending Destinations Feature Grid Layout Component -->
         <h2 class="section-title">🔥 Trending Destinations for Canadians</h2>
         <div class="deals-grid">
             
-            <!-- Cancun Deal Card -->
             <a href="#" class="deal-card" onclick="switchTab('flights')">
                 <div class="deal-img-wrapper" style="background-image: url('https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRsd2XBbmjDsrtzReMBT399SxUMNCEg4s2YfchxiNySC9kROhWcIabnyBaW0nms-Jtt1lJmQ_OLP0uu7ZA');"></div>
                 <div class="deal-info">
@@ -457,7 +488,6 @@
                 </div>
             </a>
 
-            <!-- London Deal Card -->
             <a href="#" class="deal-card" onclick="switchTab('flights')">
                 <div class="deal-img-wrapper" style="background-image: url('https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcT1o4qQfsfeqoPZfXwux3mHeidEGEQ6ELVi4np7OlxhCtCyhRwH6FdBoOWgiJs5hIYUkDNjbSFouCxSO2A');"></div>
                 <div class="deal-info">
@@ -467,7 +497,6 @@
                 </div>
             </a>
 
-            <!-- Las Vegas Deal Card -->
             <a href="#" class="deal-card" onclick="switchTab('flights')">
                 <div class="deal-img-wrapper" style="background-image: url('https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcSoMTczBrnPRwBVwL11UF14krnk7Rp8QxbfVnr6sgB2R0m_DC20PcH1ZTGvHhX3_BB232Gr0piaNeNgVaQ');"></div>
                 <div class="deal-info">
@@ -481,11 +510,10 @@
 
     </main>
 
-    <!-- Global Corporate Footer Block Frame -->
+    <!-- Global Corporate Compliance Footer Row -->
     <footer>
         <div class="footer-content">
             
-            <!-- Quick Destination Links for SEO -->
             <div class="footer-seo-row">
                 <h4>🍁 Popular Canadian Departures</h4>
                 <div class="seo-links-container">
@@ -496,7 +524,6 @@
                 </div>
             </div>
 
-            <!-- Legal Disclosures & Navigation Links -->
             <div class="footer-legal-row">
                 <div class="legal-text-box">
                     <strong>FareFinder.ca</strong>
@@ -511,54 +538,35 @@
                 </div>
             </div>
 
-            <!-- Copyright Block -->
             <div class="copyright-box">
                 &copy; 2026 FareFinder.ca. All rights reserved. Prices displayed are subject to inventory availability.
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript Navigation and Responsive Scaling Engine -->
+    <!-- Dual-Track JavaScript Sync Engine Controller -->
     <script>
         function switchTab(type) {
+            // Remove active toggles simultaneously from every structural pane element
             document.getElementById('btn-flights').classList.remove('active');
             document.getElementById('btn-hotels').classList.remove('active');
-            document.getElementById('pane-flights').classList.remove('active');
-            document.getElementById('pane-hotels').classList.remove('active');
+            
+            document.getElementById('dt-pane-flights').classList.remove('active');
+            document.getElementById('dt-pane-hotels').classList.remove('active');
+            document.getElementById('mb-pane-flights').classList.remove('active');
+            document.getElementById('mb-pane-hotels').classList.remove('active');
 
+            // Intelligently route active states depending on menu toggle selection
             if(type === 'flights') {
                 document.getElementById('btn-flights').classList.add('active');
-                document.getElementById('pane-flights').classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                document.getElementById('dt-pane-flights').classList.add('active'); // Activates Desktop Flight
+                document.getElementById('mb-pane-flights').classList.add('active'); // Activates Mobile Flight simultaneously
             } else if(type === 'hotels') {
                 document.getElementById('btn-hotels').classList.add('active');
-                document.getElementById('pane-hotels').classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                document.getElementById('dt-pane-hotels').classList.add('active'); // Activates Desktop Hotel
+                document.getElementById('mb-pane-hotels').classList.add('active'); // Activates Mobile Hotel simultaneously
             }
         }
-
-        // Live calculation engine to dynamically shrink/scale the fixed-width Trip.com iframe
-        function handleMobileScaling() {
-            const frame = document.getElementById('scaler-frame');
-            const containerWidth = frame.parentElement.clientWidth;
-            const targetWidth = 900; // Original desktop layout target layout width
-
-            if (containerWidth < targetWidth) {
-                const scaleFactor = containerWidth / targetWidth;
-                frame.style.transform = `scale(${scaleFactor})`;
-                // Calculate and enforce a matching height offset to prevent whitespace clipping
-                frame.parentElement.style.height = `${200 * scaleFactor}px`;
-                frame.style.marginBottom = `-${200 * (1 - scaleFactor)}px`;
-            } else {
-                frame.style.transform = 'none';
-                frame.parentElement.style.height = 'auto';
-                frame.style.marginBottom = '0';
-            }
-        }
-
-        // Bind layout math calculations directly to load and display resize execution tracks
-        window.addEventListener('resize', handleMobileScaling);
-        window.addEventListener('DOMContentLoaded', handleMobileScaling);
     </script>
 
 </body>
