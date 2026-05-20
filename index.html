@@ -619,6 +619,29 @@
             ]
         };
 
+
+          function updateDeals(city) {
+    const container = document.getElementById("deals-container"); // or your specific container ID
+    container.innerHTML = ""; // Clear old cards
+
+    const flights = flightData[city] || [];
+
+    flights.forEach(flight => {
+        // Create a clickable card linking out to your specific target URLs
+        const cardHTML = `
+            <a href="${flight.url}" target="_blank" rel="noopener noreferrer" class="flight-card-link">
+                <div class="flight-card">
+                    <img src="${flight.img}" alt="${flight.title}">
+                    <h3>${flight.title}</h3>
+                    <p>${flight.desc}</p>
+                    <span class="price-tag">${flight.price}</span>
+                </div>
+            </a>
+        `;
+        container.insertAdjacentHTML("beforeend", cardHTML);
+    });
+}  
+            
         function updateFlightDeals(selectedCity) {
             if (!flightData[selectedCity]) return;
             
