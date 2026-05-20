@@ -21,7 +21,7 @@
             color: var(--text-dark);
         }
 
-        /* Desktop Header Layout */
+        /* Responsive Header Layout */
         header {
             background-color: #ffffff;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
@@ -72,13 +72,14 @@
             background-image: linear-gradient(rgba(15, 41, 77, 0.7), rgba(15, 41, 77, 0.45)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
-            height: 540px;
+            min-height: 540px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 0 20px;
+            padding: 40px 20px;
             text-align: center;
+            box-sizing: border-box;
         }
 
         .hero-section h1 {
@@ -97,7 +98,8 @@
 
         /* Navigation Tabs Container */
         .tabs-container {
-            width: 908px;
+            width: 900px;
+            max-width: 100%;
             display: flex;
             gap: 5px;
         }
@@ -124,20 +126,20 @@
             color: var(--dark-navy);
         }
 
-        /* Central Widget Display Block Frame */
-        .search-widget-container {
+        /* SMART MOBILE SCALING WRAPPER FOR IFRAMES */
+        .widget-scaler-frame {
+            width: 900px;
+            height: 200px;
             background: #ffffff;
             border-bottom-left-radius: 12px;
             border-bottom-right-radius: 12px;
             border-top-right-radius: 12px;
             box-shadow: 0 12px 40px rgba(0,0,0,0.25);
-            width: 900px; 
-            height: 200px; 
             overflow: hidden;
             border: 4px solid #ffffff;
+            transform-origin: top center;
         }
 
-        /* Utility display classes for tab swapping */
         .widget-pane {
             display: none;
             width: 100%;
@@ -181,7 +183,7 @@
             background: #ffffff;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 15 rgba(0,0,0,0.02);
             text-align: center;
         }
 
@@ -340,6 +342,35 @@
             border-top: 1px solid rgba(255,255,255,0.05);
             padding-top: 20px;
         }
+
+        /* 📱 RESPONSIVE MEDIA QUERIES FOR SMARTPHONES */
+        @media (max-width: 940px) {
+            header {
+                padding: 0 20px;
+            }
+            .hero-section h1 {
+                font-size: 32px;
+            }
+            .hero-section p {
+                font-size: 16px;
+            }
+            .tabs-container {
+                width: 100%;
+            }
+            .tab-btn {
+                flex: 1;
+                padding: 12px 10px;
+                font-size: 14px;
+            }
+            .features-grid, .deals-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .footer-legal-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -367,9 +398,10 @@
             <button id="btn-hotels" class="tab-btn" onclick="switchTab('hotels')">🏨 Hotels</button>
         </div>
 
-        <div class="search-widget-container">
+        <!-- The responsive scaling wrapper housing the search system -->
+        <div id="scaler-frame" class="widget-scaler-frame">
             
-            <!-- ✈️ TAB 1: FLIGHT SEARCH INTERFACE BOX (S17200178) -->
+            <!-- ✈️ TAB 1: FLIGHT SEARCH INTERFACE BOX -->
             <div id="pane-flights" class="widget-pane active">
                 <iframe 
                     src="https://www.trip.com/partners/ad/S17200178?Allianceid=7851628&SID=295367402&trip_sub1=" 
@@ -379,7 +411,7 @@
                 </iframe>
             </div>
 
-            <!-- 🏨 TAB 2: HOTEL SEARCH INTERFACE BOX (S17199926) -->
+            <!-- 🏨 TAB 2: HOTEL SEARCH INTERFACE BOX -->
             <div id="pane-hotels" class="widget-pane">
                 <iframe 
                     src="https://www.trip.com/partners/ad/S17199926?Allianceid=7851628&SID=295367402&trip_sub1=" 
@@ -411,7 +443,7 @@
             </div>
         </div>
 
-        <!-- 🌟 NEW: Top Trending Deals Grid Section -->
+        <!-- Top Trending Deals Grid Section -->
         <h2 class="section-title">🔥 Trending Destinations for Canadians</h2>
         <div class="deals-grid">
             
@@ -486,16 +518,14 @@
         </div>
     </footer>
 
-    <!-- JavaScript Navigation Driver Engine -->
+    <!-- JavaScript Navigation and Responsive Scaling Engine -->
     <script>
         function switchTab(type) {
-            // Remove active classes completely across all dashboard elements
             document.getElementById('btn-flights').classList.remove('active');
             document.getElementById('btn-hotels').classList.remove('active');
             document.getElementById('pane-flights').classList.remove('active');
             document.getElementById('pane-hotels').classList.remove('active');
 
-            // Isolate active target layout channel selection parameter
             if(type === 'flights') {
                 document.getElementById('btn-flights').classList.add('active');
                 document.getElementById('pane-flights').classList.add('active');
@@ -506,6 +536,29 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
+
+        // Live calculation engine to dynamically shrink/scale the fixed-width Trip.com iframe
+        function handleMobileScaling() {
+            const frame = document.getElementById('scaler-frame');
+            const containerWidth = frame.parentElement.clientWidth;
+            const targetWidth = 900; // Original desktop layout target layout width
+
+            if (containerWidth < targetWidth) {
+                const scaleFactor = containerWidth / targetWidth;
+                frame.style.transform = `scale(${scaleFactor})`;
+                // Calculate and enforce a matching height offset to prevent whitespace clipping
+                frame.parentElement.style.height = `${200 * scaleFactor}px`;
+                frame.style.marginBottom = `-${200 * (1 - scaleFactor)}px`;
+            } else {
+                frame.style.transform = 'none';
+                frame.parentElement.style.height = 'auto';
+                frame.style.marginBottom = '0';
+            }
+        }
+
+        // Bind layout math calculations directly to load and display resize execution tracks
+        window.addEventListener('resize', handleMobileScaling);
+        window.addEventListener('DOMContentLoaded', handleMobileScaling);
     </script>
 
 </body>
