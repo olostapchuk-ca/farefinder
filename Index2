@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FareFinder - Travel Smarter</title>
+    <style>
+        :root {
+            --primary: #0066cc;
+            --bg: #f8f9fa;
+            --text: #2d3436;
+        }
+
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        header { background: #ffffff; padding: 20px 0; border-bottom: 1px solid #eee; text-align: center; }
+        header h1 { color: var(--primary); font-size: 24px; }
+
+        .search-hero { padding: 60px 20px; text-align: center; }
+        .widget-wrapper { 
+            background: #ffffff; 
+            padding: 30px; 
+            border-radius: 16px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+            display: inline-block; 
+            width: 100%; 
+            max-width: 600px;
+        }
+
+        .tab-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { padding: 10px 20px; border: 1px solid #ddd; border-radius: 20px; cursor: pointer; transition: 0.3s; }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .deals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 40px; }
+        .deal-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+        .deal-card:hover { transform: translateY(-5px); }
+        .deal-img { height: 200px; background-size: cover; background-position: center; }
+        .deal-content { padding: 20px; }
+        .price { font-weight: bold; color: var(--primary); font-size: 1.2em; display: block; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container"><h1>FareFinder</h1></div>
+</header>
+
+<section class="search-hero">
+    <div class="widget-wrapper">
+        <h3>Find your next Canadian adventure</h3>
+        <div class="tab-container" id="city-tabs">
+            <button class="tab-btn active" onclick="switchCity('Toronto', this)">Toronto</button>
+            <button class="tab-btn" onclick="switchCity('Vancouver', this)">Vancouver</button>
+            <button class="tab-btn" onclick="switchCity('Halifax', this)">Halifax</button>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="deals-grid" id="dynamic-deals-grid">
+        </div>
+</div>
+
+<script>
+    // Здесь ваша логика данных (travelDealsData) остается прежней
+    const travelDealsData = {
+        "Toronto": [
+            { title: "Cancun All-Inclusive", desc: "5-star resort, beach front", img: "https://images.unsplash.com/photo-1552076339-0d418756bf0a?w=400", price: "From $899" },
+            { title: "London Getaway", desc: "Direct flights, 4 days", img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400", price: "From $1200" },
+            { title: "Florida Family Trip", desc: "Theme parks & sun", img: "https://images.unsplash.com/photo-1597404294660-c38183152643?w=400", price: "From $650" }
+        ],
+        // ... (добавьте остальные города по аналогии)
+  "Montreal": [
+        {
+            title: "Punta Cana All-Inclusive",
+            desc: "Depart from YUL. Top rated Dominican palm beaches with everything covered.",
+            img: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $920 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=Punta%20Cana%2C%20Dominican%20Republic&origin=Montreal%2C%20QC%2C%20Canada%20%28YUL-Pierre%20Elliott%20Trudeau%20Intl.%29"
+        },
+        {
+            title: "Paris Explorations",
+            desc: "Direct flight paths from Montreal + cozy centrally located boutique hotels.",
+            img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $1,150 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=Paris%2C%20France&origin=Montreal%2C%20QC%2C%20Canada%20%28YUL-Pierre%20Elliott%20Trudeau%20Intl.%29"
+        },
+        {
+            title: "Orlando Family Package",
+            desc: "Escape the winter. Flight and hotel configurations optimized for families.",
+            img: "https://images.unsplash.com/photo-1506158669146-619067262a3b?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $610 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=Orlando%2C%20Florida&origin=Montreal%2C%20QC%2C%20Canada%20%28YUL-Pierre%20Elliott%20Trudeau%20Intl.%29"
+        }
+    ],
+    "Vancouver": [
+        {
+            title: "Hawaii Resort Package",
+            desc: "Fly out of YVR straight to Maui or Oahu beach side resorts.",
+            img: "https://images.unsplash.com/photo-1542082843-c783c6514b8a?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $1,040 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=Oahu%2C%20Hawaii&origin=Vancouver%2C%20BC%2C%20Canada%20%28YVR-Intl.%29"
+        },
+        {
+            title: "Los Angeles Getaway",
+            desc: "Quick coastal hop down south. Flights + West Hollywood hotel rooms combined.",
+            img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $495 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=Los%20Angele%2C%20California&origin=Vancouver%2C%20BC%2C%20Canada%20%28YVR-Intl.%29"
+        },
+        {
+            title: "Puerto Vallarta Package",
+            desc: "Pacific coast Mexican sunshine. Non-stop routes paired with ocean views.",
+            img: "https://images.unsplash.com/photo-1512813583145-baaa340ef29f?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $810 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=Puerto%20Vallarta%2C%20Jalisco%2C%20Mexico&origin=Vancouver%2C%20BC%2C%20Canada%20%28YVR-Intl.%29"
+        }
+    ],
+    "Calgary": [
+        {
+            title: "Cabo San Lucas All-Inclusive",
+            desc: "Fly out of YYC to the dramatic cliffs of Baja. Premium beach properties combined with flights.",
+            img: "https://images.unsplash.com/photo-1533760831612-856c9a9da8a5?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $945 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=Cabo%20San%20Lucas%2C%20Baja%20California%20Sur%2C%20Mexico&origin=Calgary%2C%20AB%2C%20Canada%20%28YYC-Intl.%29"
+        },
+        {
+            title: "Phoenix Desert Golf Resort",
+            desc: "Popular escape for Albertans. Non-stop flight + resort combo in sunny Arizona.",
+            img: "https://images.unsplash.com/photo-1532960401447-7dd05bef20b0?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $680 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=Phoenix%2C%20Arizona&origin=Calgary%2C%20AB%2C%20Canada%20%28YYC-Intl.%29"
+        },
+        {
+            title: "Maui Tropical Luxury",
+            desc: "Direct winter routes from YYC to the soft golden sands of Hawaii.",
+            img: "https://images.unsplash.com/photo-1505852673536-a8e82183ca74?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $1,220 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=Maui%2C%20Hawaii&origin=Calgary%2C%20AB%2C%20Canada%20%28YYC-Intl.%29"
+        }
+    ],
+   "Winnipeg": [
+        {
+            title: "Cancun Flight & Hotel",
+            desc: "Escape the Prairies with direct winter flights paired with top Mayan resorts.",
+            img: "https://images.unsplash.com/photo-1552074284-5e88ef1aef18?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $960 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=Cancun%2C%20Quintana%20Roo%2C%20Mexico&origin=Winnipeg%2C%20MB%2C%20Canada%20%28YWG-James%20Armstrong%20Richardson%20Intl.%29"
+        },
+        {
+            title: "Varadero All-Inclusive",
+            desc: "Sun, sand, and dynamic flight bundles configured from YWG to Cuba.",
+            img: "https://images.unsplash.com/photo-1535914109403-bb9019672eb7?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $820 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=Varadero%2C%20Matanzas%20Province%2C%20Cuba&origin=Winnipeg%2C%20MB%2C%20Canada%20%28YWG-James%20Armstrong%20Richardson%20Intl.%29"
+        },
+        {
+            title: "Orlando Magic Bundle",
+            desc: "Perfect family vacation plan. Flights and theme park hotels grouped up.",
+            img: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $699 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=Orlando%2C%20Florida&origin=Winnipeg%2C%20MB%2C%20Canada%20%28YWG-James%20Armstrong%20Richardson%20Intl.%29"
+        }
+    ],
+    "Halifax": [
+        {
+            title: "Punta Cana Beach Resort",
+            desc: "Convenient Atlantic flight paths straight to Dominican Republic's clearest lagoons.",
+            img: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $995 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=Punta%20Cana%2C%20Dominican%20Republic&origin=Halifax%2C%20NS%2C%20Canada%20%28YHZ-Stanfield%20Intl.%29"
+        },
+        {
+            title: "London City Exploration",
+            desc: "East Coast advantage: Shorter overnight flights from YHZ directly to historic UK properties.",
+            img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $1,050 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=London%2C%20England%2C%20United%20Kingdom&origin=Halifax%2C%20NS%2C%20Canada%20%28YHZ-Stanfield%20Intl.%29"
+        },
+        {
+            title: "Cayo Coco All-Inclusive",
+            desc: "Unbeatable pristine beaches. Easy direct packages perfect for Maritimers.",
+            img: "https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=400&q=80",
+            price: "<span>From $799 CAD</span> <span class='per-person'>pkg incl. taxes</span>",
+            url: "https://www.expedia.ca/Hotel-Search?packageType=fh&destination=Cayo%20Coco%2C%20Ciego%20de%20Avila%20Province%2C%20Cuba&origin=Halifax%2C%20NS%2C%20Canada%20%28YHZ-Stanfield%20Intl.%29"
+        }
+    ]
+    };
+
+    function switchCity(cityName, element) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+
+        const grid = document.getElementById('dynamic-deals-grid');
+        grid.innerHTML = travelDealsData[cityName].map(deal => `
+            <div class="deal-card">
+                <div class="deal-img" style="background-image: url('${deal.img}')"></div>
+                <div class="deal-content">
+                    <h4>${deal.title}</h4>
+                    <p>${deal.desc}</p>
+                    <span class="price">${deal.price}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Инициализация
+    window.onload = () => switchCity('Toronto', document.querySelector('.tab-btn'));
+</script>
+
+</body>
+</html>
